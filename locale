@@ -1,0 +1,10 @@
+uncomment en_US>UTF-8 UTF_8, zh_cn.UTF_8 UTF-8 and other needed loacalizations in 
+/etc/locale-gen, and generate them with: "locale-gen "
+set LANG: echo "LANG=en_US.UTF-8" > /etc/locale.conf
+generate locale encoding(to solve "cannot set LC_TYPE/LC_MESSAGE/LC_ALL to default 
+locale" problem): 
+localedef -v -c -i en_US -f 
+UTF-8 
+en_US.UTF-8
+
+

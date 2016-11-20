@@ -1,0 +1,44 @@
+steps to install archlinux
+1. use dd or usbwrite to burn a live-cd, ensure the usb works well
+2. network connection
+ethernet:
+	broadcom card has to modprobe kernel modules sequently:
+		 modprobe -r tg3
+		 modprobe broadcom
+		 modprobe tg3
+		 dhcpcd ethernet0
+	to autostart when login:
+	   	 systemctl enable dhcpcd@ethernet0.service
+	to remove auto start:
+	   	 systemctl disable dhcpcd@ethernet0.service
+	to change the device name:
+	   	  /etc/udev/rules.d/10-network.rules
+		  SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="mac_address",NAME=="new_device_name"
+wifi:
+	ip link set wifi0 up
+	wpa_supplicant -B -i wifi0 -c /path/to/config/file
+		       config file(attention: no whitespace between letters or equal sign):
+		       	      network={
+					ssid="wifi_name"
+					psk="password"
+					}
+        dhcpcd wifi0
+3. fdisk to partition disk and format it
+mount /def/sda1 /mnt
+4. select mirror servers: /etc/pacman.d/mirrorlist
+install the base packages: pacstrap /mnt base
+generate fstab file(indicate filesystem should be mounted into the filesystem): genfstab -U /mnt >> /mnt/etc/fstab
+arch-chroot /mnt
+5. grub
+grub-install --target=i386-pc /dev/sda
+grub-mkconfig -o /boot/grub/grub.cfg
+Sector 32 FlexNet Problem: clear the mbr
+       	  dd if=/dev/sda of=/archive/file bs=512 count=63
+	  dd if=/dev/zero of=/dev/sda bs=512 count=63
+6. gpu driver and xorg
+arch wiki xorg nvidia
+xorg-server xorg-xinit(startx from console)
+7.desktop enviroment
+8. locale
+remember localdef -v -c -i en_US -f UTF-8 en.US.UTF_8
+

@@ -1,0 +1,6 @@
+openssh, generate ssh key: ssh-keygen
+send public key to remote server: ssh-copy-id username@remote.server
+copy files frome remote server: scp username@remote.server:file/to/send [username@destination:]/where/to/put
+
+let a program run in background: program &
+
