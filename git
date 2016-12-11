@@ -1,0 +1,9 @@
+add ssh key to github to allow ssh login
+create a repository on github manually or using:
+	curl -u "USER" https://api.github.com/user/repos -d '{"name":"REPO"}'
+git remote add origin git@github.com:USER/REPO.git
+git push origin master
+
+Afterwards, just using
+	git push
+to push an existing repository
