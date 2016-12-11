@@ -8,3 +8,18 @@ UTF-8
 en_US.UTF-8
 
 
+add following commands to ~/.bashrc to autostart ibus:
+(add to /etc/profile to start at user login)
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+
+no character candidate:
+	cancel ibus-preference > embed preedit text in application window
+	killall ibus-daemon
+	ibus-daemon-d
+
+for Gnome:
+	Language input method must be registerd in System Setting 'Region and Language' before using it.
+
+
