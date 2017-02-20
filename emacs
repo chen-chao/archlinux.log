@@ -19,3 +19,12 @@ set proxy for package downloading, only for http and HTTPs
 set socks proxy
 	(setq url-gateway-method 'socks)
 	(setq socks-server '("Default server" "127.0.0.1" 1080 5))
+
+go to line
+       M+g g
+rename current file and buffer
+       C+x C+j (dired-jump to current file)
+       R (dired to rename) to rename
+       C+x k RET
+show line number
+     M+x linum-mode     
