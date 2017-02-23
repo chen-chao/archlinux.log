@@ -1,0 +1,22 @@
+## SSH
+openssh, generate ssh key
+     ssh-keygen
+         
+send public key to remote server
+     ssh-copy-id username@remote.server
+
+copy files frome remote server
+     scp [-Pportnumber] username@remote.server:file/to/send [username@destination:]/where/to/put
+
+## Console
+let a program run in background
+    program &
+
+setup terminal proxy
+    export http_proxy=socks5://127.0.0.1:1080 https_proxy=socks5://127.0.0.1:1080
+
+## Chromium
+setup chromium proxy
+    chromium --proxy-server="[HTTP|Socks5]://url[:port]"
+
+
