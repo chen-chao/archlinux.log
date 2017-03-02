@@ -1,0 +1,2 @@
+executing codes in pdb mode
+	!import code; code.interact(local=vars() )
