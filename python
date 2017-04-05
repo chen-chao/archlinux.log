@@ -21,3 +21,5 @@ or
 get callable methods of a class object
         dir(classobj)
         hasattr(classobj, attribute)
+
+using generator to represent natural number or similar infinite series.

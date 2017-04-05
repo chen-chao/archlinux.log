@@ -19,4 +19,31 @@ setup terminal proxy
 setup chromium proxy
     chromium --proxy-server="[HTTP|Socks5]://url[:port]"
 
+## NetworkManager
+to avoid endless password prompt(for atheros chip):
+    sudo echo "options ath9k nohwcrypt=1" >> /etc/modprobe.d/ath9k.conf
+to connect and disconnect wifi:
+    nmcli dev wifi connect "ssid" password "password"
+    nmcli dev disconnect (iface?) wifi0
+to enable networkmanager service:
+    sytemctl enable networkmanager
+   
+## Switch usb mode
+switch between different mode of usb stick:
+   usb_modeswitch -KW -v 148f -p 2878
+check the driver information:
+   dmesg | grep mt7601u
+
+
+
+
+
+
+
+
+
+
+
+
+
 

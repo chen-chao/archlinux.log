@@ -1,0 +1,2 @@
+To avoid xorg-server font error, install xorg-fonts-type1
+make fonts dir: sudo mkfontdir

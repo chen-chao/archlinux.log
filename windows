@@ -1,0 +1,3 @@
+use <ntfs-3g> package to mount and format ntfs type disk.
+use <ms-sys> to write windows boot bios.
+     
