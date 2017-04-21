@@ -1,3 +1,4 @@
+
 Using CapsLock as Control Key:
      setxkbmap -option 'ctrl:nocaps'
 CapsLock can be replaced by "both-shift":
@@ -28,3 +29,5 @@ rename current file and buffer
        C+x k RET
 show line number
      M+x linum-mode     
+
+after installing fonts ttf-freefont and ttf-dejavu, emacs's default font becomes much neat than former(didn't set manually).

@@ -1,3 +1,6 @@
 use <ntfs-3g> package to mount and format ntfs type disk.
-use <ms-sys> to write windows boot bios.
+create bootable windows udisk
+       make one partition, format as NTFS(or VFAT) and mark bootable.
+       write boot sector: msys -7 /dev/sd*
+       mount and copy all files from the iso to the partition.
      
