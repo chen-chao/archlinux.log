@@ -1,47 +1,103 @@
-steps to install archlinux
-1. use dd or usbwrite to burn a live-cd, ensure the usb works well
-2. network connection
-ethernet:
-	broadcom card has to modprobe kernel modules sequently:
-		 modprobe -r tg3
-		 modprobe broadcom
-		 modprobe tg3
-		 dhcpcd ethernet0
-	to autostart when login:
-	   	 systemctl enable dhcpcd@ethernet0.service
-	to remove auto start:
-	   	 systemctl disable dhcpcd@ethernet0.service
-	to change the device name:
-	   	  /etc/udev/rules.d/10-network.rules
-		  SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="mac_address",NAME=="new_device_name"
-wifi:
-	ip link set wifi0 up
-	wpa_supplicant -B -i wifi0 -c /path/to/config/file
-		       config file(attention: no whitespace between letters or equal sign):
-		       	      network={
-					ssid="wifi_name"
-					psk="password"
-					}
-        dhcpcd wifi0
-3. fdisk to partition disk and format it
-mount /def/sda1 /mnt
-4. select mirror servers: /etc/pacman.d/mirrorlist
-install the base packages: pacstrap /mnt base
-generate fstab file(indicate filesystem should be mounted into the filesystem): genfstab -U /mnt >> /mnt/etc/fstab
-arch-chroot /mnt
-5. grub
-grub-install --target=i386-pc /dev/sda
-grub-mkconfig -o /boot/grub/grub.cfg
-Sector 32 FlexNet Problem: clear the mbr
-       	  dd if=/dev/sda of=/archive/file bs=512 count=63
-	  dd if=/dev/zero of=/dev/sda bs=512 count=63
-6. gpu driver and xorg
-arch wiki xorg nvidia
-xorg-server xorg-xinit(startx from console)
-7.desktop enviroment
-8. locale
-remember localdef -v -c -i en_US -f UTF-8 en.US.UTF_8
+* Insallation of Arch Linux
 
-fstab
-add uuid to /etc/fstab
-    lsblk -f | grep sdx >> /etc/fstab(must be root)
+The installation of Arch Linux is fully described in the [[https://wiki.archlinux.org/index.php/Installation_guide#Update_the_system_clock][Official Guide]]. However, one may meets miscellaneous and wired problems during the installation process, especially hardware driver like graphics card or wireless adapter and so on. Here presents main steps and problems when I installed Arch Linux, almost all commands needs root priority.
+
+** Burn a livecd
+Ways to flash an installation media can see [[https://wiki.archlinux.org/index.php/USB_flash_installation_media][USB flash installation media]] on ArchWiki. Ensure the usb works well while flashing the iso image.
+- On GNU/Linux
+Use dd to flash the usb:
+#+Begin_SRC shell
+  lsblk #to list the usb drives
+  dd if=/path/to/image of=/dev/sdx bs=4M status=progress && sync
+#+End_SRC
+- On Windows
+Use tools like Rufus, USBWriter to flash the media.
+
+Take attention that the data in the USB will be destroyed while flashing.
+
+** Network setup
+Network is a key move during the installation. Ethernet may be easily setup, while wireless adapter will be difficult and annoying to handle if its driver is not available.
+
+*** Ethernet
+Set up eathernet by dhcpcd:
+#+Begin_SRC shell
+  lspci -v # to see network interface card and driver module_name
+  dmesg | grep module_name # check the driver was loaded
+  dhcpcd ethernet0 # or other interface shown above
+#+End_SRC
+
+To autostart/disable/stop Ethernet connection:
+#+Begin_SRC shell
+  systemctl enable/disable/stop dhcpcd@ethernet0.service #enable/disable/stop service
+#+End_SRC
+
+Broadcom netlink gigabit ethernet device needs to modprobe kernel modules sequently:
+#+Begin_SRC shell
+ modprobe -r tg3
+ modprobe broadcom
+ modprobe tg3
+ dhcpcd ethernet0
+#+End_SRC
+Or create a /etc/modprobe.d/broadcom.conf(refer [[https://forums.gentoo.org/viewtopic-t-969162-start-0.html][here]]):
+#+Begin_SRC
+  softdep tg3 pre: broadcom
+#+End_SRC
+
+Change the interface device name, edit /etc/udev/rules.d/10-network.rules:
+#+Begin_SRC
+  SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="mac_address",NAME=="new_device_name"
+#+End_SRC
+
+*** Wireless network
+The way to setup wireless network is just similar to Ethernet, however, there is no standard way to solve driver problems.
+#+Begin_SRC shell
+  lspci -v # to see network interface card and driver module_name
+  dmesg | grep module_name # check the driver was loaded
+  ip link set wifi0 up # or other interface shown above
+  wpa_supplicant -B -i wifi0 -c /path/to/config.file
+  dhcpcd wifi0 
+#+End_SRC
+The configure file of wpa_supplicant is like:
+#+Begin_SRC text
+network={
+    ssid="wifi_name"
+    psk="password"
+}
+#+End_SRC
+Take attention that there is no whitespace between letters and the equal signs.
+
+After all of above things, verify internet connectivity by:
+#+Begin_SRC shell
+  ping -n 5 www.archlinux.org
+#+End_SRC
+
+** Partition the disks
+
+*** MBR or EFI
+
+*** Partition scheme
+
+** Install and configure the system
+
+Installation steps are just like:
+1. Uncomment selected mirror servers in =/etc/pacman.d/mirrorlist=.
+2. Install the base packages from the selected mirror servers: =pacstrap /mnt base=.
+3. Generate fstab to write need-to-mount filesystem: =genfstab -U /mnt >> /mnt/etc/fstab=.
+4. Chang root into the new system: =arch-chroot /mnt=.
+
+Afterwards, you can add other need-to-mount filesystem manually:
+#+Begin_SRC shell
+  lsblk -f | grep sdx >> /etc/fstab # export uuid to fstab, still needs to be edited
+#+End_SRC
+
+*** Boot loader
+Install a boot loader, here is Grub:
+#+Begin_SRC shell 
+  grub-install --target=i386-pc /dev/sda
+  grub-mkconfig -o /boot/grub/grub.cfg
+#+End_SRC
+Sometime some program has written something in the MBR, like [[https://ubuntuforums.org/showthread.php?t%3D1661254][Sector 32 being in use by FlexNet]] problem. It needs to clear the mbr:
+#+Begin_SRC shell
+  dd if=/dev/sda of=/archive/file bs=512 count=63 # archive the mbr
+  dd if=/dev/zero of=/dev/sda bs=512 count=63
+#+End_SRC

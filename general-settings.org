@@ -5,15 +5,9 @@ After installaton of Arch Linux, we should make our system work more properly an
 ** Locale
 Set locale by the following steps, 
 1. Uncomment the needed locales in /etc/locale-gen.
-2. Generate them.
-3. Set $LANG.
-4. Generate the locale encodings.
-
-#+Begin_SRC shell
-  locale-gen
-  echo "LANG=en_US.UTF-8" > /etc/locale.conf
-  localedef -v -c -i en_US -f UTF-8 en_US.UTF-8
-#+End_SRC
+2. Generate the needed locales: =locale-gen=.
+3. Set $LANG: =echo "LANG=en_US.UTF-8" > /etc/locale.conf=.
+4. Generate the locale encodings: =localedef -v -c -i en_US -f UTF-8 en_US.UTF-8=.
 
 Ignore the last step may cause annoying errors in terminal "cannot set LC_TYPE/LC_MESSAGE/LC_ALL to default locale".
 
@@ -38,25 +32,15 @@ For Gnome, input method for one language must be registerd in System Setting 'Re
 ** Network
 Driver problems are hard to solve, details analyzing steps could refer [[https://wiki.archlinux.org/index.php/Wireless_network_configuration][Wireless Network Configuration]] on [[https://wiki.archlinux.org][ArchWiki]]. Here are just some simple usages.
 *** USB WiFi Adapter
-Use usb_modeswitch to change the usb mode between mass storage and wireless adapter(examples with usb id 148f:2878):
-#+Begin_SRC shell
-  usb_modeswitch -KW -v 148f -p 2878
-#+End_SRC 
-Check the driver information
-#+Begin_SRC shell
-  dmesg | grep mt7601u
-#+End_SRC
+Use usb_modeswitch to change the usb mode between mass storage and wireless adapter(examples with usb id 148f:2878): =usb_modeswitch -KW -v 148f -p 2878=
+Check the driver information: =dmesg | grep mt7601u=
 
 *** SSH
 The following steps can login on a remote server via SSH by openssh,
-1. Generate ssh key.
-2. Send the public key to the remote server.
-3. Login on the server via ssh.
-#+Begin_SRC shell
-  ssh-keygen
-  ssh-copy-id username@remote.server
-  ssh username@remote.server
-#+End_SRC
+1. Generate ssh key: =ssh-keygen=.
+2. Send the public key to the remote server: =ssh-copy-id username@remote.server=.
+3. Login on the server via ssh: =ssh username@remote.server=.
+
 Use scp to copy files from/to remote server,
 #+Begin_SRC shell
   scp [-Pport] username@file.server:file/to/send [username@destination:]/where/to/put
@@ -89,17 +73,40 @@ For atheros chips, it may need to avoid endless password prompt:
 
 ** Time and Timezone
 Time and timezone settings could refer [[https://wiki.archlinux.org/index.php/Installation_guide#Update_the_system_clock][Installation Guide]] and [[https://wiki.archlinux.org/index.php/Time][Time]] on ArchWiki.
-To show time and timezone information and change hardware time, use:
-#+Begin_SRC shell
-  timedatactl
-  hwclock --show
-  date MMDDhhmm
-  hwclock --systohc
-#+End_SRC
+To change the hardware time, follow steps:
+1. Show system time information: =timedatectl=.
+2. Show hardware time: =hwclock --show=.
+3. Change system time: =date MMDDhhmm=.
+4. Set hardware time: =hwclock --systohc=.
 
 ** Privilege Control
 
 ** Package Management
+
+*** Sync
+
+*** Query
+
+*** Remove
+Remove unnecessary packages by pacman can refer [[https://bbs.archlinux.org/viewtopic.php?pid%3D690438][Cleaning-optimizing arch-linux]].
+- Clear cache:
+#+Begin_SRC shell
+  pacman -Syy
+  pacman -Scc
+  pacman -Suu
+#+End_SRC
+- Remove a package:
+#+Begin_SRC shell
+  pacman -Rscnd <package>
+#+End_SRC
+- Remove unnecessary packages:
+#+Begin_SRC shell
+  pacman -Rsn $(pacman -Qdtq)
+#+End_SRC
+After operations, show explicitly installed packages:
+#+Begin_SRC shell
+  pacman -Qei | awk '/^Name/ { name=$3 } /^Groups/ { if ( $3 != "base" && $3 != "base-devel" ) { print name } }'
+#+End_SRC
 
 ** Desktop Environment
 
@@ -136,8 +143,13 @@ To avoid xorg-server font warings, install xorg-fonts-type1 and make fonts dir u
 Each desktop environment has its prefered display manager while they should work also with most of others.
 
 *** Applications 
+<<<<<<< HEAD
 For personal installed applications, we can create desktop entry manually to add it to the desktop menu. Desktop entry folder is /usr/share/applications/, the *.desktop file is like(zotero for example):
 #+Begin_QUOTE
+=======
+For personal installed applications, we can create desktop entry manually to add it to the desktop menu. Desktop entry folder is /usr/share/applications, the *.desktop file is like(zotero for example):
+#+Begin_SRC text
+>>>>>>> a248b5e... fix format and misspells
 [Desktop Entry]
 Name=Zotero 
 GenericName=Zotero 
@@ -167,3 +179,17 @@ Or Unmute with alsamixer which has a gui:
 #+End_SRC
 
 *** Vedio
+
+*** Miscellaneous
+
+- Warnings "Unknown media type in type 'all/all'", see [[https://bbs.archlinux.org/viewtopic.php?id%3D207911][Unknown media type in type]] on Arch Linux BBS and [[https://askubuntu.com/questions/456183/what-does-unknown-media-type-in-type-all-all-mean][this]] on AskUbuntu.
+#+Begin_SRC shell
+  sudo rm /usr/share/mime/packages/kde.xml 
+  sudo update-mime-database /usr/share/mime
+#+End_SRC
+
+
+
+
+
+
