@@ -1,0 +1,169 @@
+* General Settings for Arch Linux after Installation
+
+After installaton of Arch Linux, we should make our system work more properly and easier. Here is a simple annotated index.
+
+** Locale
+Set locale by the following steps, 
+1. Uncomment the needed locales in /etc/locale-gen.
+2. Generate them.
+3. Set $LANG.
+4. Generate the locale encodings.
+
+#+Begin_SRC shell
+  locale-gen
+  echo "LANG=en_US.UTF-8" > /etc/locale.conf
+  localedef -v -c -i en_US -f UTF-8 en_US.UTF-8
+#+End_SRC
+
+Ignore the last step may cause annoying errors in terminal "cannot set LC_TYPE/LC_MESSAGE/LC_ALL to default locale".
+
+** Input Method
+For ibus, add following commands to ~/.shellrc to autostart ibus(or /etc/profile to autostart at user login):
+#+Begin_SRC shell
+  export GTK_IM_MODULE=ibus
+  export XMODIFIERS=@im=ibus
+  export QT_IM_MODULE=ibus
+  ibus-daemon drx
+#+End_SRC
+
+To Restart ibus after change configure,
+#+Begin_SRC shell
+  killall ibus-daemon
+  ibus-daemon drx
+#+End_SRC
+
+If there is no character candidate, cancel "embed preedit text" in ibus preference.
+For Gnome, input method for one language must be registerd in System Setting 'Region and Language' before using it.
+
+** Network
+Driver problems are hard to solve, details analyzing steps could refer [[https://wiki.archlinux.org/index.php/Wireless_network_configuration][Wireless Network Configuration]] on [[https://wiki.archlinux.org][ArchWiki]]. Here are just some simple usages.
+*** USB WiFi Adapter
+Use usb_modeswitch to change the usb mode between mass storage and wireless adapter(examples with usb id 148f:2878):
+#+Begin_SRC shell
+  usb_modeswitch -KW -v 148f -p 2878
+#+End_SRC 
+Check the driver information
+#+Begin_SRC shell
+  dmesg | grep mt7601u
+#+End_SRC
+
+*** SSH
+The following steps can login on a remote server via SSH by openssh,
+1. Generate ssh key.
+2. Send the public key to the remote server.
+3. Login on the server via ssh.
+#+Begin_SRC shell
+  ssh-keygen
+  ssh-copy-id username@remote.server
+  ssh username@remote.server
+#+End_SRC
+Use scp to copy files from/to remote server,
+#+Begin_SRC shell
+  scp [-Pport] username@file.server:file/to/send [username@destination:]/where/to/put
+#+END_SRC
+
+*** Proxy
+Here are common ways to setup proxy for different programs.
+1. For terminal
+#+Begin_SRC shell
+  export http_proxy=protocol://url:port https_proxy=protocol://url:port
+#+End_SRC
+2. Chromium
+Start Chromium with proxy(former chrome conversations must be closed):
+#+Begin_SRC shell
+  chromium --proxy-server="[http|https|socks5]://url[:port]"
+#+End_SRC
+
+*** NetworkManager
+NetwrokManager is a program for automatically detecting and connecting the network for system. For an desktop applet, install nm-applet package(or specific package for the desktop environment). Other needed function package could refer [[https://wiki.archlinux.org/index.php/NetworkManager][NetworkManager]] on ArchWiki.
+
+To enable NetworkManager service at startup, enable networkmanager service:
+#+Begin_SRC shell
+  sudo sytemctl enable networkmanager
+#+End_SRC
+
+For atheros chips, it may need to avoid endless password prompt:
+#+Begin_SRC shell
+  sudo echo "options ath9k nohwcrypt=1" >> /etc/modprobe.d/ath9k.conf
+#+End_SRC
+
+** Time and Timezone
+Time and timezone settings could refer [[https://wiki.archlinux.org/index.php/Installation_guide#Update_the_system_clock][Installation Guide]] and [[https://wiki.archlinux.org/index.php/Time][Time]] on ArchWiki.
+To show time and timezone information and change hardware time, use:
+#+Begin_SRC shell
+  timedatactl
+  hwclock --show
+  date MMDDhhmm
+  hwclock --systohc
+#+End_SRC
+
+** Privilege Control
+
+** Package Management
+
+** Desktop Environment
+
+*** Xorg
+Install xorg-server, and xorg-server-utils for additional tools(such as xterm, xinit and so on).
+start an xorg-server and a desktop environment(lxqt for example),
+#+Begin_SRC shell 
+  startx
+  startlxqt
+#+End_SRC
+Or add the following line to /etc/X11/xinit/xinitrc,
+#+Begin_SRC shell
+  exec startlxqt
+#+End_SRC
+To generate an example configure of Xorg, 
+#+Begin_SRC shell
+  Xorg :2 -configure
+  cp ./xorg.conf.example /etc/X11/xorg.conf
+#+End_SRC
+Even if there is a warning or error, you can use it as a conf file.
+NVIDIA can modify the graphics card part of the xorg.conf, just 
+#+Begin_SRC shell 
+  nvidia-xconfig
+#+End_SRC
+Details about NVIDIA graphics card driver can be found [[https://wiki.archlinux.org/index.php/NVIDIA][here]].
+
+You can examine the xorg-server log files at /var/log/Xorg.n.log.
+To avoid xorg-server font warings, install xorg-fonts-type1 and make fonts dir under each of the waring font folders,
+#+Begin_SRC shell
+  sudo mkfontdir
+#+End_SRC 
+
+*** Display Manager
+Each desktop environment has its prefered display manager while they should work also with most of others.
+
+*** Applications 
+For personal installed applications, we can create desktop entry manually to add it to the desktop menu. Desktop entry folder is /usr/share/applications/, the *.desktop file is like(zotero for example):
+#+Begin_QUOTE
+[Desktop Entry]
+Name=Zotero
+GenericName=Zotero
+Comment=Reference Management(Standalone)
+Icon=/path/to/Zotero_linux-x86_64/chrome/icons/default/default48.png
+Exec=/path/to/Zotero_linux-x86_64/zotero
+Type=Application
+Terminal=false
+Categories=Development;Internet;
+Keywords=Document;Reference;
+#+END_QUOTE 
+
+** Fonts
+
+** Multimedia
+
+*** Sound
+ALSA is the Basic sound driver of Linux. By default the sound channels are muted. Unmuting the channels could done by the following steps.
+1. Install alsa-utils package.
+2. Unmute the sound card's master volume by using amixer:
+#+Begin_SRC shell
+  amixer sset Master unmute
+#+End_SRc
+Or Unmute with alsamixer which has a gui:
+#+Begin_SRC shell
+  alsamixer
+#+End_SRC
+
+*** Vedio

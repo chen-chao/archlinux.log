@@ -1,2 +1,0 @@
-add uuid to /etc/fstab
-    lsblk -f | grep sdx >> /etc/fstab(must be root)

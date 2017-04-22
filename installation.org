@@ -42,3 +42,6 @@ xorg-server xorg-xinit(startx from console)
 8. locale
 remember localdef -v -c -i en_US -f UTF-8 en.US.UTF_8
 
+fstab
+add uuid to /etc/fstab
+    lsblk -f | grep sdx >> /etc/fstab(must be root)

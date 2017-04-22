@@ -1,4 +1,0 @@
-config: Xorg :2 -configure
-nvidia can modify the video part of  xorg config(/etc/X11/xorg.conf): 
-nvidia-xconfig
-

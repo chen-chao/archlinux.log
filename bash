@@ -8,3 +8,7 @@ for the specific example, we can also have
 .bash_logout is also for login shell.
 create a symbol link
        sudo ln -s /target/to/link /link/file
+
+## Console
+let a program run in background
+    program &
