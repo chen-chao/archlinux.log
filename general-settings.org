@@ -139,14 +139,14 @@ Each desktop environment has its prefered display manager while they should work
 For personal installed applications, we can create desktop entry manually to add it to the desktop menu. Desktop entry folder is /usr/share/applications/, the *.desktop file is like(zotero for example):
 #+Begin_QUOTE
 [Desktop Entry]
-Name=Zotero
-GenericName=Zotero
-Comment=Reference Management(Standalone)
-Icon=/path/to/Zotero_linux-x86_64/chrome/icons/default/default48.png
-Exec=/path/to/Zotero_linux-x86_64/zotero
-Type=Application
-Terminal=false
-Categories=Development;Internet;
+Name=Zotero 
+GenericName=Zotero 
+Comment=Reference Management(Standalone) 
+Icon=/path/to/Zotero_linux-x86_64/chrome/icons/default/default48.png 
+Exec=/path/to/Zotero_linux-x86_64/zotero 
+Type=Application 
+Terminal=false 
+Categories=Development;Internet; 
 Keywords=Document;Reference;
 #+END_QUOTE 
 
