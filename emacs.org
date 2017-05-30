@@ -1,49 +1,33 @@
-* Emacs
 
-** Concepts and settings
-*** Encodings
-Encodings are different ways to encode files.
-- Set file encoding: =C+x ret r gb2312 ret=.
+Using CapsLock as Control Key:
+     setxkbmap -option 'ctrl:nocaps'
+CapsLock can be replaced by "both-shift":
+     setxkbmap -option 'shift:both_capslock'
+set encoding
+	C+x ret r gb2312 ret
+toggle on line wrapping
+	M+x visual-line-mode
+show current file buffer name(or others)
+	M+: buffer-file-name
 
-*** Fonts
-After installing fonts =ttf-freefont= and =ttf-dejavu=, Emacs uses =ttf-dejavu= as default font automatically.
-
-** Package management
-
-*** Proxy
-Sometimes we need a proxy to update our packages, add the following codes to Emacs init file.
-- HTTP/HTTPS
-#+Begin_SRC lisp
-(setq url-proxy-services '(("no_proxy" . "^\\(localhost\\|10.*\\)")
+set proxy for package downloading, only for http and HTTPs
+    (setq url-proxy-services
+     '(("no_proxy" . "^\\(localhost\\|10.*\\)")
        ("HTTP" . "proxy.com:80")
-       ("HTTPs" . "proxy.com:8080")        ) )        
-#+End_SRC
-- Socks
-#+Begin_SRC lisp
-(setq url-gateway-method 'socks)
-(setq socks-server '("Default server" "127.0.0.1" 1080 5) ) ;;for socks5
-#+End_SRC
+       ("HTTPs" . "proxy.com:8080")
+        ) )        
 
-*** Get and update packages
+set socks proxy
+	(setq url-gateway-method 'socks)
+	(setq socks-server '("Default server" "127.0.0.1" 1080 5))
 
+go to line
+       M+g g
+rename current file and buffer
+       C+x C+j (dired-jump to current file)
+       R (dired to rename) to rename
+       C+x k RET
+show line number
+     M+x linum-mode     
 
-** Key settings and shortcut
-Here are several key bindings and shortcuts of Emacs.
-- Using CapsLock as Control Key and replace it by "both-shift": 
-#+Begin_SRC shell
-setxkbmap -option 'ctrl:nocaps'
-setxkbmap -option 'shift:both_capslock'
-#+End_SRC
-
-- Toggle on or off line wrapping: =M+x visual-line-mode=.
-- Go to line: =M+g g=.
-- Show current file buffer name(or others): =M+: buffer-file-name=.
-- Rename current file and buffer: =C+x C+j R (dired-jump to current fold and rename file)=.
-- Show line number: =M+x linum-mode=.
-
-** Modes
-
-*** Eshell
-
-*** Python
-
+after installing fonts ttf-freefont and ttf-dejavu, emacs's default font becomes much neat than former(didn't set manually).
