@@ -1,0 +1,117 @@
+* Python notes
+
+** Variable scoping
+
+Python searches dynamically when *using* the variable, while only searches the current scope when *assigning* a variable.
+
+#+Begin_SRC python
+num = 0
+def foo():
+    def bar():
+        num += 1 # wrong, variable 'num' is not defined
+
+def foo():
+    def bar():
+        print(num+1) # right
+#+End_SRC
+
+Keyword =global= makes a variable works at script level. It is visible to all functions in the script.
+
+#+Begin_SRC python
+global num
+def foo():
+    num = 1
+    def bar():
+        num += 1 # num=2
+#+End_SRC
+[[https://www.python.org/dev/peps/pep-3104/][
+PEP 3104 -- Access to Names in Outer Scopes]] introduces the =nonlocal= keyword, which can only works in wrapped functions.
+#+Begin_SRC python
+# nonlocal can not be defined at script level
+def foo():
+    nonlocal num
+    num = 1
+    def bar():
+        num += 1 # num=2
+#+End_SRC
+
+** Decorator
+
+*** Decorator with arguments
+
+Multiple ways to use a decorator function with arguments can see [[http://stackoverflow.com/questions/5929107/python-decorators-with-parameters][stackoverflow: python decorators with parameters]]. One simple way is to make the decorator with arguments to be a partial function, like:
+
+#+Begin_SRC python
+import functools
+def decorator(arguments):
+    def layer(func):
+        @functools.wraps
+        def wrapper(*args, **kargs):
+            # do something
+            pass
+        return wrapper
+    return layer
+
+dec = functools.partial(decorator, arguments=arg)
+
+@dec
+def foo():
+    pass
+
+#+End_SRC
+
+Another more elegant method mentioned in *Python Cookbook* is to use default arguments:
+
+#+Begin_SRC python
+import functools
+def decorator(func=None, arguemnts=None):
+# or other default arguments, but the default func must be None
+    if func is None:
+        return functools.partial(decorator, arguments)
+    @functools.wraps(func)
+    def wrapper(*args, **kargs):
+        # do something
+        pass
+    return wrapper
+
+@decorator(args)# or @decorator(@decorator()) if no args specified
+def foo():
+    pass
+#+End_SRC
+
+*** Class as decorator
+
+
+** Logging
+
+Reference [[https://fangpenlin.com/posts/2012/08/26/good-logging-practice-in-python/][Good logging practice in Python]]
+** Debugging
+
+*** Pdb
+- executing codes in pdb mode
+	!import code; code.interact(local=vars() )
+
+** Class
+create an automatic incremental id in a class
+        import itertools
+        class resource_cl():
+            newid = itertools.count().next
+            def __init__(self):
+                self.id = resource_cl.newid()
+or
+        class Resource( object ):
+            class_counter= 0
+            def __init__(self, name, position, type, active):
+                self.name = name
+                self.position = position
+                self.type = type
+                self.active = active
+                self.id= Resource.class_counter
+                Resource.class_counter += 1
+
+get callable methods of a class object
+        dir(classobj)
+        hasattr(classobj, attribute)
+
+** Generator
+using generator to represent natural number or similar infinite series(too slow).
