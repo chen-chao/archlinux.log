@@ -143,10 +143,7 @@ To avoid xorg-server font warings, install xorg-fonts-type1 and make fonts dir u
 Each desktop environment has its prefered display manager while they should work also with most of others.
 
 *** Applications 
-<<<<<<< HEAD
-For personal installed applications, we can create desktop entry manually to add it to the desktop menu. Desktop entry folder is /usr/share/applications/, the *.desktop file is like(zotero for example):
-#+Begin_QUOTE
-=======
+
 For personal installed applications, we can create desktop entry manually to add it to the desktop menu. Desktop entry folder is /usr/share/applications, the *.desktop file is like(zotero for example):
 #+Begin_SRC text
 >>>>>>> a248b5e... fix format and misspells
@@ -193,3 +190,8 @@ Or Unmute with alsamixer which has a gui:
 
 
 
+=======
+Troubleshooting:
+
+1. VLC gets choppy and grey screen with .mkv files: set =tools>preferences>all>input/codecs>file caching= to 6000ms(see this [[https://bbs.archlinux.org/viewtopic.php?id=201387][topic]] in arch linux forum).
+>>>>>>> 2c99764... solve choppy and grey screens of vlc player
