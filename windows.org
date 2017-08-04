@@ -1,6 +1,23 @@
-use <ntfs-3g> package to mount and format ntfs type disk.
-create bootable windows udisk
-       make one partition, format as NTFS(or VFAT) and mark bootable.
-       write boot sector: msys -7 /dev/sd*
-       mount and copy all files from the iso to the partition.
-     
+
+
+* Notes for Windows, installation and others
+
+** Installation
+
+Burn a usb installation media for windows on Linux is a little tricky. 
+
+For Master Boot Record(MBR) booting method, 
+
+1. Partioning the udisk, format it as NTFS(or FAT32) and mark bootable(=ntfs-3g package to mount and format ntfs type disk=);
+
+2. Write boot sector by [[https://aur.archlinux.org/packages/ms-sys/][ms-sys]](for Windows 7 or older version): =ms-sys -7 /dev/sd*=;
+
+3. Mount the iso file and copy all files from it to the usb partition.
+
+For the Unified Extensible Firmware Interface(UEFI) booting method, it only needs to format the udisk as FAT32, and copy all files from the iso to it. But some troubleshootings here: 
+
+1. Disable the =secure boot= option;
+
+2. Boot into Windows Recovery Environment(WinRE), copy [[ https://github.com/tianocore/edk2/tree/master/EdkShellBinPkg/FullShell/X64][EFI Shell file]] to the udisk(different for 64bit or 32bit OS, see this [[https://answers.microsoft.com/en-us/insider/forum/all/0xc0e90002-error/036e31e9-d695-495d-bd30-b1e560ac4cf5][answer]] in the microsoft community).
+
+The installation process needs no further inference except some options.
