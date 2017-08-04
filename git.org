@@ -1,11 +1,34 @@
-add ssh key to github to allow ssh login
-create a repository on github manually or using:
-	curl -u "USER" https://api.github.com/user/repos -d '{"name":"REPO"}'
+* Git
 
-push repo to github, -u indicates --upstream
-	git remote add origin git@github.com:USER/REPO.git
-	git push -u origin master
+** Create a simple repo
 
-Afterwards, push to github only needs
-	git push
+** Config
+
+
+** Back up
+
+** Branches
+
+** Merge branches
+
+** Ignore files
+
+Show which files are ignored: =git status --ignored=.
+Check a file is ignored by which rule, use: =git check-ignore -v filename=.
+
+
+** Github
+The following steps can push a local repo to Github:
+1. Add ssh key to github to allow ssh login.
+2. Create a repository on github manually or using curl: =curl -u "USER" https://api.github.com/user/repos -d '{"name":"REPO"}'=.
+3. Push the repo to Github:
+#+Begin_SRC shell
+git remote add origin git@github.com:USER/REPO.git
+git push -u origin master # -u indicates --upstream
+#+End_SRC
+Afterwards, push to Github only needs: =git push=.
+
+
+
+
 
