@@ -28,6 +28,10 @@ git push -u origin master # -u indicates --upstream
 #+End_SRC
 Afterwards, push to Github only needs: =git push=.
 
+Sometimes, cloning repo using the default HTTPS url instead of SSH will ask username and password when pushing to the repo. Update the url like this:
+#+Begin_SRC shell
+git remote set-url origin git@github.com:USER/REPO.git
+#+End_SRC
 
 
 
