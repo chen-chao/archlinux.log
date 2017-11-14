@@ -161,6 +161,25 @@ Keywords=Document;Reference;
 
 ** Fonts
 
+** Printer
+
+CUPS is the standard system for Unix operating systems. Usually, the printer driver is not included in the =cups= package. For HP printers, =hplip= will be needed (maybe also =hplip-plugin=, see [[https://developers.hp.com/hp-linux-imaging-and-printing/supported_devices/index][the supported printers list]]). Then start the cups service by:
+#+BEGIN_SRC shell
+  systemctl enable org.cups.cupsd.service
+  systemctl start org.cups.cupsd.service
+#+END_SRC
+Set up hp printer by
+#+BEGIN_SRC shell
+  hp-setup -i
+#+END_SRC
+
+Afterwards, visit =http://localhost:631= to manage printers and jobs.
+
+Print file from command line is also cool, like
+#+BEGIN_SRC shell
+  lp -d printer_name -o page-range=1-5 filename
+#+END_SRC
+
 ** Multimedia
 
 *** Sound
