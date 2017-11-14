@@ -146,7 +146,6 @@ Each desktop environment has its prefered display manager while they should work
 
 For personal installed applications, we can create desktop entry manually to add it to the desktop menu. Desktop entry folder is /usr/share/applications, the *.desktop file is like(zotero for example):
 #+Begin_SRC text
->>>>>>> a248b5e... fix format and misspells
 [Desktop Entry]
 Name=Zotero 
 GenericName=Zotero 
@@ -157,7 +156,7 @@ Type=Application
 Terminal=false 
 Categories=Development;Internet; 
 Keywords=Document;Reference;
-#+END_QUOTE 
+#+END_SRC
 
 ** Fonts
 
@@ -183,7 +182,8 @@ Print file from command line is also cool, like
 ** Multimedia
 
 *** Sound
-ALSA is the Basic sound driver of Linux. By default the sound channels are muted. Unmuting the channels could done by the following steps.
+ALSA is the Basic sound driver of Linux. By default the sound channels
+are muted. Unmuting the channels could done by the following steps.
 1. Install alsa-utils package.
 2. Unmute the sound card's master volume by using amixer:
 #+Begin_SRC shell
@@ -195,6 +195,9 @@ Or Unmute with alsamixer which has a gui:
 #+End_SRC
 
 *** Vedio
+1. VLC gets choppy and grey screen with .mkv files: set
+   =tools>preferences>all>input/codecs>file caching= to 6000ms(see
+   this [[https://bbs.archlinux.org/viewtopic.php?id=201387][topic]] in arch linux forum).
 
 *** Miscellaneous
 
@@ -209,8 +212,3 @@ Or Unmute with alsamixer which has a gui:
 
 
 
-=======
-Troubleshooting:
-
-1. VLC gets choppy and grey screen with .mkv files: set =tools>preferences>all>input/codecs>file caching= to 6000ms(see this [[https://bbs.archlinux.org/viewtopic.php?id=201387][topic]] in arch linux forum).
->>>>>>> 2c99764... solve choppy and grey screens of vlc player
