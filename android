@@ -3,4 +3,6 @@ remove machine validating:
        将META-INF\com\google\android\updater-script文件中ifelse(is_mounted("/system"), unmount("/system"));这一行之前的所有内容都删掉
 flash lineage os:
        update twrp to newest version(may be error if using older ones).
-      
+
+eliminate the wifi confirmation:
+adb shell settings put global captive_portal_https_url https://www.google.cn/generate_204
