@@ -24,8 +24,8 @@ def foo():
     def bar():
         num += 1 # num=2
 #+End_SRC
-[[https://www.python.org/dev/peps/pep-3104/][
-PEP 3104 -- Access to Names in Outer Scopes]] introduces the =nonlocal= keyword, which can only works in wrapped functions.
+
+[[https://www.python.org/dev/peps/pep-3104/][PEP 3104 -- Access to Names in Outer Scopes]] introduces the =nonlocal= keyword, which can only works in wrapped functions.
 #+Begin_SRC python
 # nonlocal can not be defined at script level
 def foo():
@@ -91,27 +91,31 @@ Reference [[https://fangpenlin.com/posts/2012/08/26/good-logging-practice-in-pyt
 - executing codes in pdb mode
 	!import code; code.interact(local=vars() )
 
+
 ** Class
 create an automatic incremental id in a class
-        import itertools
-        class resource_cl():
-            newid = itertools.count().next
-            def __init__(self):
-                self.id = resource_cl.newid()
+#+BEGIN_SRC python
+import itertools
+class resource_cl():
+    newid = itertools.count().next
+    def __init__(self):
+    self.id = resource_cl.newid()
+#+END_SRC
 or
-        class Resource( object ):
-            class_counter= 0
-            def __init__(self, name, position, type, active):
-                self.name = name
-                self.position = position
-                self.type = type
-                self.active = active
-                self.id= Resource.class_counter
-                Resource.class_counter += 1
+#+BEGIN_SRC python
+class Resource( object ):
+    class_counter= 0
+    def __init__(self, name, position, type, active):
+        self.name = name
+        self.position = position
+        self.type = type
+        self.active = active
+        self.id= Resource.class_counter
+        Resource.class_counter += 1
+#+END_SRC
 
-get callable methods of a class object
-        dir(classobj)
-        hasattr(classobj, attribute)
+get callable methods of a class object: =dir(classobj)= or =hasattr(classobj, attr)=.
+
 
 ** Generator
 using generator to represent natural number or similar infinite series(too slow).
