@@ -2,7 +2,8 @@
 
 ** Variable scoping
 
-Python searches dynamically when *using* the variable, while only searches the current scope when *assigning* a variable.
+Python searches dynamically when *using* the variable, while only
+searches the current scope when *assigning* a variable.
 
 #+Begin_SRC python
 num = 0
@@ -15,7 +16,8 @@ def foo():
         print(num+1) # right
 #+End_SRC
 
-Keyword =global= makes a variable works at script level. It is visible to all functions in the script.
+Keyword =global= makes a variable works at script level. It is visible
+to all functions in the script.
 
 #+Begin_SRC python
 global num
@@ -25,7 +27,8 @@ def foo():
         num += 1 # num=2
 #+End_SRC
 
-[[https://www.python.org/dev/peps/pep-3104/][PEP 3104 -- Access to Names in Outer Scopes]] introduces the =nonlocal= keyword, which can only works in wrapped functions.
+[[https://www.python.org/dev/peps/pep-3104/][PEP 3104 -- Access to Names in Outer Scopes]] introduces the =nonlocal=
+keyword, which can only works in wrapped functions.
 #+Begin_SRC python
 # nonlocal can not be defined at script level
 def foo():
@@ -39,7 +42,9 @@ def foo():
 
 *** Decorator with arguments
 
-Multiple ways to use a decorator function with arguments can see [[http://stackoverflow.com/questions/5929107/python-decorators-with-parameters][stackoverflow: python decorators with parameters]]. One simple way is to make the decorator with arguments to be a partial function, like:
+Multiple ways to use a decorator function with arguments can see
+[[http://stackoverflow.com/questions/5929107/python-decorators-with-parameters][stackoverflow: python decorators with parameters]]. One simple way is to
+make the decorator with arguments to be a partial function, like:
 
 #+Begin_SRC python
 import functools
@@ -60,7 +65,8 @@ def foo():
 
 #+End_SRC
 
-Another more elegant method mentioned in *Python Cookbook* is to use default arguments:
+Another more elegant method mentioned in *Python Cookbook* is to use
+default arguments:
 
 #+Begin_SRC python
 import functools
@@ -114,8 +120,33 @@ class Resource( object ):
         Resource.class_counter += 1
 #+END_SRC
 
-get callable methods of a class object: =dir(classobj)= or =hasattr(classobj, attr)=.
+get callable methods of a class object: =dir(classobj)= or
+=hasattr(classobj, attr)=.
 
 
 ** Generator
-using generator to represent natural number or similar infinite series(too slow).
+using generator to represent natural number or similar infinite
+series(too slow).
+
+
+** Packages FAQs
+
+*** matplotlib
+
+Set custom fonts(for unicode or non-ASCII characters), config file
+=matplotlibrc= can be found by:
+
+#+BEGIN_SRC python
+import matplotlib
+matplotlib.matplotlib_fname()
+#+END_SRC
+
+Valid fonts name can be found in
+=~/.cache/matplotlib/fontList.json=. Uncomment line
+#+BEGIN_SRC text
+#font.family = sans.serif 
+#font.sans-serif :
+#+END_SRC
+Insert the custom after the quotation marks of =font.sans-serif=,
+*before* other fonts. =sans-serif= fonts meaning can be found on the
+wikipedia page [[https://en.wikipedia.org/wiki/Sans-serif][Sans-serif]].
