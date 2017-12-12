@@ -81,6 +81,16 @@ To change the hardware time, follow steps:
 
 ** Privilege Control
 
+
+*** User
+
+*** Group
+
+Group file is /etc/gpasswd?
+
+- Add or delete a user to a group: =gpasswd -a|d user=
+- View groups a user belong to: =groups user=
+
 ** Package Management
 
 *** Sync
