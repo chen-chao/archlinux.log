@@ -38,6 +38,26 @@ def foo():
         num += 1 # num=2
 #+End_SRC
 
+** Input and Output
+
+*** Get last line of a file
+
+Usually it's not efficient to get the last line of a file by reading through it:
+#+BEGIN_SRC python
+with open('somefile', 'r') as f:
+    for line in f:
+        pass
+#+END_SRC
+So we can seek to the end of the file, and read back, see [[https://stackoverflow.com/questions/3346430/what-is-the-most-efficient-way-to-get-first-and-last-line-of-a-text-file][What is the most efficient way to get first and last line of a text file?]]
+#+BEGIN_SRC python
+import os
+with open('somefile', 'rb') as f:
+    f.seek(-2, os.SEEK_END)
+    while f.read(1) != b'\n':
+        f.seek(-2, os.SEEK_CUR)
+    lastline = f.readline()
+#+END_SRC
+
 ** Decorator
 
 *** Decorator with arguments
