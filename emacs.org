@@ -26,7 +26,7 @@ set proxy for package downloading, only for http and HTTPs:
        ("HTTPs" . "proxy.com:8080")))        
 #+END_SRC
 
-set socks proxy
+set socks proxy:
 #+BEGIN_SRC lisp
 (setq url-gateway-method 'socks)
 (setq socks-server '("Default server" "127.0.0.1" 1080 5))
@@ -36,10 +36,30 @@ set socks proxy
 go to line: =M+g g=.
 show line number: =M+x linum-mode=.
 
-
 ** Keys and macros
 Using CapsLock as Control Key: =setxkbmap -option 'ctrl:nocaps'=.
+
 CapsLock can be replaced by "both-shift": =setxkbmap -option 'shift:both_capslock'=.
+
+** Term
+Switch between term mode and line mode: =C-c C-j=.
 
 ** Fonts
 After installing fonts ttf-freefont and ttf-dejavu, emacs's default font becomes much neat than former(didn't set manually).
+
+** Checkers
+
+*** flycheck
+
+flycheck using variable =flycheck-pylintrc= to config the pylintrc,
+which defaults to =.pylintrc= in home or current folder. But =pylint=
+package defaults to =~/.pylintrd/pylintrc=.
+
+*** spelling
+
+reference: [[https://joelkuiper.eu/spellcheck_emacs][Spell checking in Emacs]].
+
+** References
+
+
+[[https://github.com/lujun9972/emacs-document][emacs document]]
