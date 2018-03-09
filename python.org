@@ -150,6 +150,15 @@ series(too slow).
 
 
 ** Packages FAQs
+   
+*** Jupyter Notebook
+
+- Debug in Jupyter Notebook
+  Add debugger to the code:
+#+BEGIN_SRC python
+from IPython.core.debugger import Tracer
+Tracer()()
+#+END_SRC
 
 *** matplotlib
 
@@ -162,11 +171,16 @@ matplotlib.matplotlib_fname()
 #+END_SRC
 
 Valid fonts name can be found in
-=~/.cache/matplotlib/fontList.json=. Uncomment line
+=~/.cache/matplotlib/fontList.json=. or
+#+BEGIN_SRC python
+import matplotlib
+sorted([f.name for f in matplotlib.font_manager.fontManager.ttflist])
+#+END_SRC
+Uncomment the line
 #+BEGIN_SRC text
 #font.family = sans.serif 
 #font.sans-serif :
 #+END_SRC
-Insert the custom after the quotation marks of =font.sans-serif=,
+Insert the custom valid font after the quotation marks of =font.sans-serif=,
 *before* other fonts. =sans-serif= fonts meaning can be found on the
 wikipedia page [[https://en.wikipedia.org/wiki/Sans-serif][Sans-serif]].
