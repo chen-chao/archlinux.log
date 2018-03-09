@@ -1,0 +1,77 @@
+* Bash
+  
+Everything in bash is text. 
+
+** Commands
+
+Command format of Bash is like: =command [options] [arguments]=. So if there is no command, using =:= as the void command, like:
+#+BEGIN_SRC shell
+: 
+
+#+END_SRC
+
+** Variables
+
+A variable always has the `$' prefix, except a few conditions:
+
+- when declared or assigned: =var=1=.
+- when unset: =unset var=.
+- when exported: ==.
+- when in an arithmetic expression within double parenthesis =(())=.
+- when in special case a variable presenting a signal.
+
+
+** Command
+
+*** Arguments
+
+**** Linux Style
+     
+**** BSD Style
+     
+**** Special argument
+
+`--' can be used to indicate the end of a native command, followed arguments are parameters for the command:
+#+BEGIN_SRC shell
+grep -- -g filename # get lines contain "-g" in filename
+#+END_SRC
+In fact, the `-' also has escape representation. For the specific example, we can also have:
+#+BEGIN_SRC shell
+grep "\-g"
+grep \\-g
+#+END_SRC
+
+** Special files
+
+Configure files for Bash 
+
+*** System wide
+
+=/etc/profile= is for system login shell(executed when user logins).
+=.bash_logout= is also for login shell.  
+
+*** User
+=.bash_profile= is executed for a login shell(console started by
+=Ctrl+Alt+Fi= or =ssh=), while =.bashrc= is for non-login shell.
+
+** File management
+
+*** find
+
+find files whose name matches *.pdf and ctime bwtween a 0.5 days ago and another file's
+#+BEGIN_SRC shell
+find . -name "*.pdf" -ctime -0.5 ! -cnewer another_file | while read x; do echo "$x"; done
+#+END_SRC
+
+*** ln
+
+Create a symbol link file: =ln -s /target/to/link /link/file=.
+
+** User management
+
+** Process management
+
+** Useful Commands
+   
+
+
