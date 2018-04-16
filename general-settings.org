@@ -2,6 +2,26 @@
 
 After installaton of Arch Linux, we should make our system work more properly and easier. Here is a simple annotated index.
 
+** Grub 
+When startup, we can edit the grub thread to add the run level number at the end
+of the =linux= line to boot into different mode, for example:
+#+BEGIN_SRC shell
+  linux /boot/vmlinuz quiet 3 # boot into run level 3
+#+END_SRC
+Different runlevels are listed here:
+
+| run level number | description                                            |
+|------------------+--------------------------------------------------------|
+|                0 | halt the system                                        |
+|                1 | single user model                                      |
+|                2 | local multiuser without network service started        |
+|                3 | full multiuser with network service started            |
+|                4 | not used                                               |
+|                5 | full multiuser with network service and X windows(GUI) |
+|                6 | reboot                                                 |
+
+
+
 ** Locale
 Set locale by the following steps, 
 1. Uncomment the needed locales in /etc/locale-gen.
@@ -148,6 +168,21 @@ To avoid xorg-server font warings, install xorg-fonts-type1 and make fonts dir u
 #+Begin_SRC shell
   sudo mkfontdir
 #+End_SRC 
+
+Sometimes the x server may suffer a suddenly frozen, this may be solved by
+disable the graphic acceleration, for intel graphic card, add the following
+contents to =/etc/X11/xorg.conf.d/20-intel.conf=:
+#+Begin_QUOTE
+Section "Device"
+  Identifier  "Intel Graphics"
+  Driver      "intel"
+  Option      "NoAccel" "True"
+EndSection
+#+END_QUOTE
+See [[https://wiki.archlinux.org/index.php/intel_graphics#Xorg_configuration][intel graphics]] on archwiki.
+
+*** Display Manager
+
 
 *** Display Manager
 Each desktop environment has its prefered display manager while they should work also with most of others.
