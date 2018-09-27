@@ -20,6 +20,22 @@ A variable always has the `$' prefix, except a few conditions:
 - when in an arithmetic expression within double parenthesis =(())=.
 - when in special case a variable presenting a signal.
 
+** Strings
+
+- string length: =${#string}= or =expr length string= or =expr "$string" : '.*'=
+- substring match: =expr match $string $substring= or =expr "$string" : '$substr'=
+- substring index: =expr index $string $substring=
+- substring extraction: =${string:position}= or =${string:position:length}= or =expr substr $string position length=
+- shortest substring removal from front of $string: =${string#substring}=
+- longest substring removal from front of $string: =${string##substring}=
+- shortest substring removal from back of $string: =${string%substring}=
+- longest substring removal from back of $string: =${string%%substring}=
+- replace first match of substring: =${string/substring/replacement}=
+- replace all matches of substring: =${string//substring/replacment}=
+- replace substring from front of $string: =${string/#substring/replacement}=
+- replace substring from back of $string: =${string/%substring/replacement}=
+
+** awk
 
 ** Command
 
